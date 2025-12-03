@@ -55,12 +55,6 @@ Run:
 python batch_inference_v2.py --img_dir ./data/crop_testing --out_csv ./output/batch_inference_gene_sex.csv
 ```
 
-Custom:
-
-```bash
-python batch_inference_gene_sex.py --img_dir ./data/40X_sampled_png --out_csv ./output/my_results.csv
-```
-
 ## Gradio Web Application
 
 Run:
