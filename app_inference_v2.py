@@ -19,10 +19,6 @@ from feature_extraction import extract_wing_features_featurelist
 from models import DeeperWingCNN2, FeatureEncoder
 
 
-# =========================================================
-# 0. 路径 & 全局加载
-# =========================================================
-
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 os.chdir(PROJECT_ROOT)   # 保证相对路径以 Droso/ 为根
 
@@ -39,13 +35,8 @@ SEX_CKPT_PATH  = os.path.join(SEX_MODEL_DIR, "fusion_best.pth")
 SEX_LABEL_MAP  = os.path.join(SEX_MODEL_DIR, "label2idx.json")
 
 
-# =========================================================
-# 1. 训练特征 mean/std
-# =========================================================
+
 def load_train_feature_stats(train_csv_path):
-    """
-    从训练特征 CSV 里读取 'feature' 列，计算 mean/std
-    """
     df = pd.read_csv(train_csv_path)
     if "feature" not in df.columns:
         raise RuntimeError(f"CSV {train_csv_path} 必须包含 'feature' 列")
@@ -69,9 +60,6 @@ def load_train_feature_stats(train_csv_path):
     return feat_mean.astype(np.float32), feat_std.astype(np.float32)
 
 
-# =========================================================
-# 2. 模型结构
-# =========================================================
 class FusionClassifier(nn.Module):
     def __init__(self,
                  cnn_encoder: DeeperWingCNN2,
@@ -112,9 +100,7 @@ def build_fusion_model(
     ckpt_path,
     device
 ):
-    """
-    构建 DeeperWingCNN2 + FeatureEncoder + FusionClassifier，并加载权重
-    """
+
     # CNN encoder
     cnn = DeeperWingCNN2(in_channels=1, num_classes=num_classes).to(device)
 
@@ -135,7 +121,7 @@ def build_fusion_model(
         dropout=0.2,
     ).to(device)
 
-    # 加载权重
+
     state = torch.load(ckpt_path, map_location=device)
     fusion_model.load_state_dict(state, strict=True)
     fusion_model.eval()
@@ -144,22 +130,13 @@ def build_fusion_model(
     return fusion_model
 
 
-# =========================================================
-# 3. 单张图特征提取：直接从 PIL.Image
-# =========================================================
 def extract_feature_from_pil_image(
     pil_img,
     efd_order=10,
     downsample=2,
     max_regions=6,
 ):
-    """
-    输入：PIL.Image
-    做法：
-      1) 存到临时目录
-      2) 调用 extract_wing_features_featurelist(img_dir=tmp_dir)
-      3) 取第一行 feature
-    """
+
     tmp_dir = tempfile.mkdtemp(prefix="wing_gradio_")
     try:
         img_path = os.path.join(tmp_dir, "input.png")
@@ -190,9 +167,6 @@ def extract_feature_from_pil_image(
         shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
-# =========================================================
-# 4. 全局：加载权重 & 统计量（只在启动时做一次）
-# =========================================================
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("[INFO] Using device:", device)
 
@@ -229,15 +203,11 @@ fusion_sex = build_fusion_model(
 
 to_tensor = T.ToTensor()
 
-
-# =========================================================
-# 5. Gradio 回调函数：输入单张图，输出 gene + sex 预测
-# =========================================================
 def predict_gene_and_sex(pil_img):
     if pil_img is None:
         return "Please upload an image."
 
-    # 保证是灰度图给 CNN
+
     pil_gray = pil_img.convert("L")
 
     # 1) handcrafted features
@@ -268,7 +238,7 @@ def predict_gene_and_sex(pil_img):
         sex_idx = int(probs_sex.argmax())
         sex_label = idx2sex[sex_idx]
 
-    # 整理打印好看的字符串
+
     lines = []
     lines.append(f"### Prediction")
     lines.append("")
@@ -285,10 +255,6 @@ def predict_gene_and_sex(pil_img):
 
     return "\n".join(lines)
 
-
-# =========================================================
-# 6. 构建 Gradio App
-# =========================================================
 demo = gr.Interface(
     fn=predict_gene_and_sex,
     inputs=gr.Image(type="pil", label="Wing image"),
