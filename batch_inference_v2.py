@@ -16,9 +16,7 @@ from feature_extraction import extract_wing_features_featurelist
 from models import DeeperWingCNN2, FeatureEncoder
 
 
-# =========================================================
-# 0. parser（简单）
-# =========================================================
+
 def get_parser():
     parser = argparse.ArgumentParser(description="Batch inference for gene + sex models")
 
@@ -39,16 +37,11 @@ def get_parser():
     return parser.parse_args()
 
 
-# =========================================================
-# 1. 自动设定 PROJECT_ROOT & 切换工作区
-# =========================================================
+
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 os.chdir(PROJECT_ROOT)
 
 
-# =========================================================
-# 工具函数：Mean/Std
-# =========================================================
 def load_train_feature_stats(train_csv_path):
     df = pd.read_csv(train_csv_path)
     if "feature" not in df.columns:
@@ -69,9 +62,6 @@ def load_train_feature_stats(train_csv_path):
     return feat_mean.astype(np.float32), feat_std.astype(np.float32)
 
 
-# =========================================================
-# 模型结构
-# =========================================================
 class FusionClassifier(nn.Module):
     def __init__(self, cnn_encoder, feat_encoder, num_classes, fusion_hidden=256, dropout=0.2):
         super().__init__()
@@ -115,9 +105,6 @@ def build_fusion_model(num_classes, feat_dim, ckpt_path, device):
     return model
 
 
-# =========================================================
-# Batch inference （双模型）
-# =========================================================
 def batch_inference_gene_sex(img_dir, out_csv):
     REFER_CSV_PATH = "./data/reference_feature.csv"
     GENE_MODEL_DIR = "./fusion_cnn_mlp_model"
@@ -163,7 +150,7 @@ def batch_inference_gene_sex(img_dir, out_csv):
 
     all_records = []
 
-    # ====== loop inference ======
+
     with torch.no_grad():
         for _, row in df_feat.iterrows():
             fname = row["file_name"]
@@ -202,7 +189,7 @@ def batch_inference_gene_sex(img_dir, out_csv):
                 "sex_probs": probs_sex.tolist(),
             })
 
-    # ====== ensure output dir exists ======
+    
     out_dir = os.path.dirname(out_csv)
     if out_dir != "" and not os.path.exists(out_dir):
         os.makedirs(out_dir, exist_ok=True)
@@ -214,9 +201,7 @@ def batch_inference_gene_sex(img_dir, out_csv):
     print("[INFO] Final shape:", df_out.shape)
 
 
-# =========================================================
-# entry point
-# =========================================================
+
 if __name__ == "__main__":
     args = get_parser()
     batch_inference_gene_sex(
