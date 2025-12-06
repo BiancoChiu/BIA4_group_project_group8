@@ -1,11 +1,3 @@
-"""
-wing_features_mlp.py
-
-功能：
-- 从翅膀灰度图 tensor 提取几何 / EFD / skeleton graph / intervein 形态学特征
-- 提供 WingFeatureExtractor 类，将单张图片 -> 固定维度的 feature tensor
-- 提供 MLPClassifier 类，用于后续做基于这些特征的分类模型
-"""
 
 import numpy as np
 import torch
@@ -19,10 +11,6 @@ from skimage.measure import label, regionprops, find_contours
 from pyefd import elliptic_fourier_descriptors
 from skan import Skeleton, summarize
 
-
-# ==========================================================
-#   1. 基础特征提取函数（与脚本版一致，只是整理一下）
-# ==========================================================
 def get_wing_mask_from_array(img_np, downsample: int = 2):
     """
     img_np: 2D numpy array, float or uint8, 单通道
@@ -209,9 +197,7 @@ def extract_intervein_features(wing_mask, skel, max_regions: int = 6, vein_radiu
     return feats
 
 
-# ==========================================================
 #   2. feature_keys & dict -> tensor
-# ==========================================================
 def build_feature_keys(efd_order: int = 10, max_regions: int = 6):
     keys: list[str] = []
 
@@ -269,10 +255,7 @@ def feature_dict_to_tensor(feat_dict: dict, feature_keys: list[str], nan_fill: f
     arr = np.nan_to_num(arr, nan=nan_fill, posinf=nan_fill, neginf=nan_fill)
     return torch.from_numpy(arr)  # shape: [D]
 
-
-# ==========================================================
 #   3. WingFeatureExtractor 类：img_tensor -> feature_tensor
-# ==========================================================
 class WingFeatureExtractor:
     """
     用法示例（配合你的 DataLoader）:
