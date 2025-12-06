@@ -8,7 +8,6 @@ This repository provides a complete pipeline for *Drosophila wing image classifi
 - ✔ **CNN + 74-dim handcrafted feature fusion**
 - ✔ **Batch inference (multi-model)**
 - ✔ **Interactive Gradio Web App**
-- ✔ **Reproducible feature extraction pipeline**
 
 All paths use **relative paths**, so the project can run anywhere after cloning.
 
@@ -17,18 +16,17 @@ All paths use **relative paths**, so the project can run anywhere after cloning.
 ```
 Droso/
 │── batch_inference_v2.py
-│── gradio_app_gene_sex.py
+│── app_inference_v2.py
 │
 │── feature_extraction/
 │     └── full_feature_extractor_v3.py
 │
-│── models/
-│     ├── fusion_cnn_mlp_model/
-│     │      ├── fusion_best.pth
-│     │      └── label2idx.json
-│     └── fusion_cnn_mlp_sex_model_try_best/
-│            ├── fusion_best.pth
-│            └── label2idx.json
+│── fusion_cnn_mlp_model/
+│     ├── fusion_best.pth
+│     └── label2idx.json
+│── fusion_cnn_mlp_sex_model_try_best/
+│      ├── fusion_best.pth
+│      └── label2idx.json
 │
 │── data/
 │     ├── reference_feature.csv
@@ -63,7 +61,7 @@ Run:
 python gradio_app_gene_sex.py
 ```
 
-Visit: `http://127.0.0.1:7860`
+Visit: the given website (e.g.: `http://127.0.0.1:7860`)
 
 Features:
 
