@@ -148,9 +148,6 @@ def main():
     best_macro_f1 = -1.0
     best_state = None
 
-    # ==============================
-    # 训练循环
-    # ==============================
     for epoch in range(num_epochs):
         # ---- Train ----
         fusion_model.train()
