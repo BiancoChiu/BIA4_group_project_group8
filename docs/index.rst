@@ -1,17 +1,25 @@
-.. BIA4_group_project_group8 documentation master file, created by
-   sphinx-quickstart on Fri Dec 12 16:35:46 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Drosophila Wing Classifier
+==========================
 
-BIA4_group_project_group8 documentation
-=======================================
+Hybrid CNN + Morphometric Feature Pipeline for Sex and Genotype Prediction
+---------------------------------------------------------------------------
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+Welcome to the documentation of the *Drosophila Wing Classifier*, a software
+tool for automated sex and genotype prediction from single wing images of
+*Drosophila melanogaster*.
 
+This site describes the purpose of the project, installation and usage
+instructions, the underlying image-analysis and machine learning methods,
+and the main evaluation results.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
+   overview
+   installation
+   usage
+   methods
+   results
+   troubleshooting
+   contributing
