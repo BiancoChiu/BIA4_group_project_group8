@@ -58,7 +58,7 @@ python batch_inference_v2.py --img_dir ./data/crop_testing --out_csv ./output/ba
 Run:
 
 ```bash
-python gradio_app_gene_sex.py
+python app_inference_v2.py
 ```
 
 Visit: the given website (e.g.: `http://127.0.0.1:7860`)
