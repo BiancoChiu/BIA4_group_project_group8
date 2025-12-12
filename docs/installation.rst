@@ -11,7 +11,6 @@ The project is implemented in Python and tested with:
 * NumPy, SciPy, scikit-image, OpenCV
 * Pandas
 * Gradio (for the web interface)
-* Sphinx and the Read the Docs theme (for this documentation site)
 
 We recommend using a conda environment.
 
@@ -22,7 +21,7 @@ Clone the repository and create the environment:
 
 .. code-block:: bash
 
-   git clone <YOUR_REPO_URL>
+   git clone https://github.com/3220111903bit/BIA4_group_project_group8
    cd Droso
 
    conda create -n droso python=3.10

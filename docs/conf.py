@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'BIA4_group_project_group8'
-copyright = '2025, Bingkang'
-author = 'Bingkang'
+copyright = '2025, Group8'
+author = 'Group8'
 release = '0.1'
 
 # -- General configuration ---------------------------------------------------

@@ -31,9 +31,14 @@ For interactive exploration, launch the Gradio app:
 
 .. code-block:: bash
 
-   python gradio_app_gene_sex.py
+   python app_inference_v2.py
 
 This starts a local web server, typically at ``http://127.0.0.1:7860``.
+
+.. image:: _static/webui.png
+   :width: 70%
+   :align: center
+   :alt: Normalised confusion matrix for gene classification
 
 The web page consists of:
 
