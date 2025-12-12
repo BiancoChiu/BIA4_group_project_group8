@@ -38,7 +38,7 @@ This starts a local web server, typically at ``http://127.0.0.1:7860``.
 .. image:: _static/webui.png
    :width: 70%
    :align: center
-   :alt: Normalised confusion matrix for gene classification
+   :alt: webui interface
 
 The web page consists of:
 
