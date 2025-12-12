@@ -1,7 +1,4 @@
 # Read the Docs configuration file
-# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
-
-# Required
 version: 2
 
 build:
@@ -14,9 +11,4 @@ sphinx:
 
 python:
   install:
-    # 安装你的项目（可选，如果文档里需要 import droso 之类的包）
-    - method: pip
-      path: .
-
-    # 安装构建文档所需的依赖（Sphinx、主题等）
     - requirements: docs/requirements.txt
